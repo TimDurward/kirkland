@@ -1,0 +1,8 @@
+kirkland:
+  image: "alpine"
+  job:
+    run:
+      name: test-run
+      command: |
+      ping -c 5 google.com
+
