@@ -1,4 +1,6 @@
 const { machine } = require('./machine');
+const { Logger } = require('../../Logger');
+const logger = new Logger('jobexecutor.states.dockerstart').init();
 
 class JobDockerStart {
   constructor(parent_id, ctx) {
@@ -6,10 +8,10 @@ class JobDockerStart {
   }
 
   initialize() {
-    console.log(`[${this.state}] - Initialized. Listening for signed machine events...`);
+    logger.info('Initialized. Listening for signed machine events...');
 
     machine.on(machine.finiteStates[this.state].signed, data => {
-      console.log(`[${this.state}] - Event ${machine.event}.`);
+      logger.info('machine event', { event: machine.event });
 
       // Do something then transition states.
       machine.transition({ state: this.state });

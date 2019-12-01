@@ -1,19 +1,6 @@
 const EventEmitter = require('eventemitter2').EventEmitter2;
-
-// Job Exec State
-//   Idle
-//     START -> InitialStart
-//   InitialStart
-//     DOCKER_PULL -> DockerPull
-//   DockerPull
-//     DOCKER_START -> DockerStart
-//   DockerStart
-//     DOCKER_EXEC -> DockerExec
-//   DockerExec
-//     CLEAN -> Clean
-//   Clean
-//     DONE -> Complete
-//   Complete
+const { Logger } = require('../../Logger');
+const logger = new Logger('jobexecutor.states.machine').init();
 
 const finiteStates = Object.freeze({
   idle: {
@@ -67,7 +54,8 @@ class Machine extends EventEmitter {
     this.on('state.transitions.**', data => {
       const fromState = finiteStates[data.state];
       const toState = fromState.to;
-      console.log(`[Machine] - Event ${this.event} from ${data.state} to ${toState}`);
+      logger.info('machine event', { event: machine.event, transition: `from ${data.state} to ${toState}` });
+      // console.log(`[Machine] - Event ${this.event}`);
 
       // If state transition passes. Dispatch to child state.
       if (fromState && toState) {

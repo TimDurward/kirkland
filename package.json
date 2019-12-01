@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eventemitter2": "^5.0.1"
+    "eventemitter2": "^5.0.1",
+    "js-yaml": "^3.13.1",
+    "winston": "^3.2.1"
   }
 }

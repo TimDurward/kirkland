@@ -1,4 +1,6 @@
 const { machine } = require('./machine');
+const { Logger } = require('../../Logger');
+const logger = new Logger('jobexecutor.states.idle').init();
 
 class JobIdle {
   constructor() {
@@ -6,7 +8,7 @@ class JobIdle {
   }
 
   initialize() {
-    console.log(`[${this.state}] - Initialized. Listening for signed machine events...`);
+    logger.info('Initialized. Listening for signed machine events...');
   }
 
   // Dispatch transition for state to change
