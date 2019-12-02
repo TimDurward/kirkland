@@ -31,6 +31,20 @@ class Docker {
       logger.error(e);
     }
   }
+
+  async imageExists(imageName) {
+    try {
+      // Might need to replace native client method because it doesn't support org/image
+      // Could use /v2/repositories/<org>/<image>
+      // example: https://hub.docker.com/v2/repositories/circleci/node/
+
+      const image = await this.client.searchImages({ term: imageName });
+      logger.info('docker image exists', { status: 'OK' });
+      return image;
+    } catch (e) {
+      logger.error(e);
+    }
+  }
 }
 
 exports.Docker = Docker;

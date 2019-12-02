@@ -38,8 +38,15 @@ class JobInit {
 
       // Health Checks
       await this.docker.health();
-      
+
+      // Validate Docker Image
+      await this.docker.imageExists(config.kirkland.image);
+
+      // init state complete, transition to next state...
       machine.transition({ state: this.state });
+
+      // Need to transition init state to 'error state' for thrown exceptions
+      // that goes for all other states. 
     });
   }
 
