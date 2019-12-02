@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dockerode": "^3.0.2",
     "eventemitter2": "^5.0.1",
     "joi": "^14.3.1",
     "js-yaml": "^3.13.1",
