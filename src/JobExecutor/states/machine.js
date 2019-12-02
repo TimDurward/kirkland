@@ -1,6 +1,6 @@
 const EventEmitter = require('eventemitter2').EventEmitter2;
 const { Logger } = require('../../Logger');
-const logger = new Logger('jobexecutor.states.machine').init();
+const logger = new Logger('kirkland.jobexecutor.states.machine').init();
 
 const finiteStates = Object.freeze({
   idle: {

@@ -5,4 +5,3 @@ kirkland:
       name: test-run
       command: |
         ping -c 5 google.com
-

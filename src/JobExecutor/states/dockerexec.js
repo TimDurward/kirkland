@@ -1,6 +1,6 @@
 const { machine } = require('./machine');
 const { Logger } = require('../../Logger');
-const logger = new Logger('jobexecutor.states.dockerexec').init();
+const logger = new Logger('kirkland.jobexecutor.states.dockerexec').init();
 
 class JobDockerExec {
   constructor(parent_id, ctx) {

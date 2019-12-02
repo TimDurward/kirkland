@@ -11,6 +11,7 @@ class Logger {
       format: winston.format.combine(winston.format.json()),
       defaultMeta: { service: this.service },
       transports: [new winston.transports.Console()],
+      handleExceptions: true,
     });
   }
 }

@@ -1,6 +1,6 @@
 const { machine } = require('./machine');
 const { Logger } = require('../../Logger');
-const logger = new Logger('jobexecutor.states.clean').init();
+const logger = new Logger('kirkland.jobexecutor.states.clean').init();
 
 class JobClean {
   constructor(parent_id, ctx) {
