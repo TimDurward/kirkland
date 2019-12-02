@@ -31,7 +31,9 @@ class KirklandConfig {
       // Get the schema that will validate loaded config.
       const objectSchema = this._KirklandDefinedSchema();
 
-      return await objectSchema.validate(loadedConfig);
+      const validConfig = await objectSchema.validate(loadedConfig);
+      logger.info('Kirkland config is valid');
+      return validConfig;
     } catch (e) {
       logger.error(e);
     }

@@ -12,12 +12,17 @@
 
 const { machine } = require('./machine');
 const { KirklandConfig } = require('../../Config');
+
 const { Logger } = require('../../Logger');
 const logger = new Logger('kirkland.jobexecutor.states.init').init();
+
+const { Docker } = require('../../Drivers/Docker');
+const docker = new Docker();
 
 class JobInit {
   constructor(ctx) {
     this.ctx = ctx;
+    this.docker = ctx.docker;
     this.state = 'init';
   }
 
@@ -32,9 +37,8 @@ class JobInit {
       const config = await kirklandConfig.init();
 
       // Health Checks
-
+      await this.docker.health();
       
-      // Do something then transition states.
       machine.transition({ state: this.state });
     });
   }

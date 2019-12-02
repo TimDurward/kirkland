@@ -5,8 +5,13 @@ const { JobExec } = require('./src/JobExecutor');
 // could be string file path, remotely), or buffered data
 const fs = require('fs');
 const kirk_config = fs.readFileSync('./.kirk.yaml', 'utf8');
-// console.log(kirk_config.toString());
-const jobExec = new JobExec({ id: 123, config: kirk_config });
+
+// when invoking JobExecutor, also pass in the docker client
+// so it can be instantiated once and have parent-level context
+const { Docker } = require('./src/Drivers/Docker');
+const docker = new Docker();
+
+const jobExec = new JobExec({ id: 123, config: kirk_config, docker: docker });
 
 jobExec.start();
 jobExec.dispatch('idle');

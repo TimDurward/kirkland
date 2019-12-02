@@ -11,7 +11,7 @@ class JobExec {
     this.ctx = ctx;
     this.states = {
       idle: new JobIdle(),
-      init: new JobInit({ id: ctx.id, config: ctx.config }),
+      init: new JobInit({ id: ctx.id, config: ctx.config, docker: ctx.docker }),
       dockerpull: new JobDockerPull(),
       dockerstart: new JobDockerStart(),
       dockerexec: new JobDockerExec(),
