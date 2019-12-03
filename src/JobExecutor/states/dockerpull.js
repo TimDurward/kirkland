@@ -3,16 +3,22 @@ const { Logger } = require('../../Logger');
 const logger = new Logger('kirkland.jobexecutor.states.dockerpull').init();
 
 class JobDockerPull {
-  constructor(parent_id, ctx) {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.docker = ctx.docker;
+    this.config = ctx.config;
     this.state = 'dockerpull';
   }
 
   initialize() {
     logger.info('Initialized. Listening for signed machine events...');
 
-    machine.on(machine.finiteStates[this.state].signed, data => {
+    machine.on(machine.finiteStates[this.state].signed, async data => {
       logger.info('machine event', { event: machine.event });
 
+      // Load docker image from config to machine registry
+      await this.docker.pullImage(this.config.kirkland.image);
+      
       // Do something then transition states.
       machine.transition({ state: this.state });
     });

@@ -32,6 +32,31 @@ class Docker {
     }
   }
 
+	// Pulls down a docker image from registry and follows stream until finished or error
+  async pullImage(image) {
+    try {
+      logger.info('pulling docker image');
+      return new Promise((resolve, reject) => {
+        this.client.pull(image, (err, stream) => {
+          if (err) reject(err);
+          else this.client.modem.followProgress(stream, onFinished, onProgress);
+
+          // Resolves Promise<NodeJS.ReadableStream>
+          function onFinished() {
+            logger.info('image successfully pulled from docker');
+            resolve();
+          }
+
+          function onProgress(event) {
+            logger.info('docker pull in progress', { status: event.status, layer_id: event.id });
+          }
+        });
+      });
+    } catch (e) {
+      logger.error(e);
+    }
+  }
+
   async imageExists(imageName) {
     try {
       // Might need to replace native client method because it doesn't support org/image

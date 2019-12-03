@@ -1,5 +1,5 @@
 kirkland:
-  image: "alpine"
+  image: "node"
   job:
     run:
       name: test-run
