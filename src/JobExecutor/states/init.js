@@ -16,13 +16,11 @@ const { KirklandConfig } = require('../../Config');
 const { Logger } = require('../../Logger');
 const logger = new Logger('kirkland.jobexecutor.states.init').init();
 
-const { Docker } = require('../../Drivers/Docker');
-const docker = new Docker();
-
 class JobInit {
   constructor(ctx) {
     this.ctx = ctx;
     this.docker = ctx.docker;
+    this.config = ctx.config;
     this.state = 'init';
   }
 
@@ -30,23 +28,19 @@ class JobInit {
     logger.info('Initialized. Listening for signed machine events...');
 
     machine.on(machine.finiteStates[this.state].signed, async data => {
-      logger.info('machine event', { event: machine.event });
-
-      // Load kirkland config
-      const kirklandConfig = new KirklandConfig({ file: this.ctx.config });
-      const config = await kirklandConfig.init();
+      logger.info('incoming machine event', { event: machine.event });
 
       // Health Checks
       await this.docker.health();
 
       // Validate Docker Image
-      await this.docker.imageExists(config.kirkland.image);
+      await this.docker.imageExists(this.config.kirkland.image);
 
       // init state complete, transition to next state...
       machine.transition({ state: this.state });
 
       // Need to transition init state to 'error state' for thrown exceptions
-      // that goes for all other states. 
+      // that goes for all other states.
     });
   }
 

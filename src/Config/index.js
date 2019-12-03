@@ -17,7 +17,7 @@ class KirklandConfig {
 
   async init() {
     try {
-      logger.info('Validating Config');
+      logger.info('validating kirkland config');
       return await this._ValidateConfigFromSchema();
     } catch (e) {
       logger.error(e);
@@ -32,7 +32,7 @@ class KirklandConfig {
       const objectSchema = this._KirklandDefinedSchema();
 
       const validConfig = await objectSchema.validate(loadedConfig);
-      logger.info('Kirkland config is valid');
+      logger.info('kirkland config is valid');
       return validConfig;
     } catch (e) {
       logger.error(e);
@@ -50,7 +50,6 @@ class KirklandConfig {
   // Base Schema Definition
   _KirklandDefinedSchema() {
     return joi.object({
-      a: joi.string(),
       kirkland: {
         image: joi.string(),
         job: {
